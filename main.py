@@ -1,15 +1,17 @@
 import sys
 import sqlite3
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QWidget
 
+from main_ui import Ui_MainWindow
+from addEditCoffeeForm_ui import Ui_Form
 
-class Main(QMainWindow):
+
+class Main(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        self.con = sqlite3.connect('coffee.sqlite')
+        self.setupUi(self)
+        self.con = sqlite3.connect('data/coffee.sqlite')
         self.cur = self.con.cursor()
         self.update_table()
 
@@ -49,10 +51,10 @@ class Main(QMainWindow):
         self.form.show()
 
 
-class AddEditForm(QWidget):
+class AddEditForm(QWidget, Ui_Form):
     def __init__(self, main, db_connection, db_cursor, row_id=None):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.main = main
         self.con = db_connection
         self.cur = db_cursor
