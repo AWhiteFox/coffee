@@ -41,8 +41,11 @@ class Main(QMainWindow):
         if self.form:
             self.statusBar.showMessage('Форма уже открыта!', 2000)
             return
-        i = self.tableWidget.item(self.tableWidget.currentRow(), 0).text()
-        self.form = AddEditForm(self, self.con, self.cur, i)
+        cell = self.tableWidget.item(self.tableWidget.currentRow(), 0)
+        if not cell:
+            self.statusBar.showMessage('Выберите строку!', 2000)
+            return
+        self.form = AddEditForm(self, self.con, self.cur, int(cell.text()))
         self.form.show()
 
 
